@@ -28,7 +28,7 @@ class Ball:
         self.x = starts[0]
         self.y = -3
         self.canvas_height = self.canvas.winfo_height()
-        self.canvas_width = 500
+        self.canvas_width = self.canvas.winfo_width()
 
     def draw(self):
         self.canvas.move(self.id, self.x, self.y)
@@ -44,12 +44,12 @@ class Ball:
         if pos[2] >= self.canvas_width:
             self.x = -3
             self.score(False)
-        
+
         if self.hit_paddle(pos) == True:
             self.x = 3
         if self.hit_paddle1(pos) == True:
             self.x = -3
-    
+
     def score(self, val):
         global counter
         global counter1
@@ -66,7 +66,6 @@ class Ball:
             counter1 += 1
             a = self.canvas.create_text(375, 40, text = counter1, font = ("Arial", 60), fill = "white")      
 
-
     def hit_paddle(self, pos):
         paddle_pos = self.canvas.coords(self.paddle.id)
         if pos[1] >= paddle_pos[1] and pos[1] <= paddle_pos[3]:
@@ -79,7 +78,7 @@ class Ball:
             if pos[2] >= paddle_pos[0] and pos[2] <= paddle_pos[2]:
                 return True
             return False
-    
+
 class Paddle:
     def __init__(self, canvas, color):
         self.canvas = canvas
@@ -127,7 +126,7 @@ class Paddle1:
 
     def  turn_right(self, evt):
         self.y = -3
-        
+
 paddle = Paddle(canvas, 'blue')
 paddle1 = Paddle1(canvas, 'red')
 ball = Ball(canvas, "orange", paddle, paddle1)
@@ -136,8 +135,26 @@ while 1:
     ball.draw()
     paddle.draw()
     paddle1.draw()
+    if counter == 10:
+        ball.x = 0
+        ball.y = 0
+        paddle.y = 0
+        paddle1.y = 0
+        canvas.create_text(250, 200, text = "Félicitations Joueur1 ! Tu as gagné !", font = 32, fill = "red")
+        canvas.create_text(250, 215, text = "Score:" + str(counter) + " - " + str(counter1), font = 32, fill = "red")
+    
+    if counter1 == 10:
+        ball.x = 0
+        ball.y = 0
+        paddle.y = 0
+        paddle1.y = 0
+        canvas.create_text(250, 200, text = "Félicitations Joueur2 ! Tu as gagné !", font = 32, fill = "red")
+        canvas.create_text(250, 215, text = "Score:" + str(counter) + " - " + str(counter1), font = 32, fill = "red") 
+    
     tk.update_idletasks()
     tk.update()
     time.sleep(0.01)
 
+    if counter == 10 or counter1 == 10:
+        time.sleep(10)
 tk.mainloop()
