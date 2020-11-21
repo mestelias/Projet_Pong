@@ -2,6 +2,9 @@ from tkinter import*
 import random
 import time
 
+counter = 0
+counter1 = 0
+
 tk = Tk()
 tk.title('Pong!')
 tk.resizable(0, 0)
@@ -14,9 +17,10 @@ tk.update()
 canvas.create_line(250, 0, 250, 400, fill = "white")
 
 class Ball:
-    def __init__(self, canvas, color, paddle):
+    def __init__(self, canvas, color, paddle, paddle1):
         self.canvas = canvas
         self.paddle = paddle
+        self.paddle1 = paddle1
         self.id = canvas.create_oval(10, 10, 25, 25, fill = color)
         self.canvas.move(self.id, 235, 200)
         starts = [-3, 3]
@@ -40,11 +44,39 @@ class Ball:
         if pos[2] >= self.canvas_width:
             self.x = -3
             self.score(False)
+        
+        if self.hit_paddle(pos) == True:
+            self.x = 3
+        if self.hit_paddle1(pos) == True:
+            self.x = -3
+    
+    def score(self, val):
+        global counter
+        global counter1
+
+        if val == False:
+            a = self.canvas.create_text(125, 40, text = counter, font = ("Arial", 60), fill = "white")
+            canvas.itemconfig(a, fill = "black")
+            counter += 1
+            a = self.canvas.create_text(125, 40, text = counter, font = ("Arial", 60), fill = "white")
+
+        if val == True:
+            a = self.canvas.create_text(375, 40, text = counter1, font = ("Arial", 60), fill = "white")
+            canvas.itemconfig(a, fill = "black")
+            counter1 += 1
+            a = self.canvas.create_text(375, 40, text = counter1, font = ("Arial", 60), fill = "white")      
+
 
     def hit_paddle(self, pos):
         paddle_pos = self.canvas.coords(self.paddle.id)
         if pos[1] >= paddle_pos[1] and pos[1] <= paddle_pos[3]:
             if pos[0] >= paddle_pos[0] and pos[0] <= paddle_pos[2]:
+                return True
+            return False
+    def hit_paddle1(self, pos):
+        paddle_pos = self.canvas.coords(self.paddle1.id)
+        if pos[1] >= paddle_pos[1] and pos[1] <= paddle_pos[3]:
+            if pos[2] >= paddle_pos[0] and pos[2] <= paddle_pos[2]:
                 return True
             return False
     
@@ -72,12 +104,38 @@ class Paddle:
     def  turn_right(self, evt):
         self.y = 3
 
+class Paddle1:
+    def __init__(self, canvas, color):
+        self.canvas = canvas
+        self.id = canvas.create_rectangle(470, 150, 500, 250, fill = color)
+        self.y = 0
+        self.canvas_height = self.canvas.winfo_height()
+        self.canvas_width = self.canvas.winfo_width()
+        self.canvas.bind_all('<KeyPress-Left>', self.turn_left)
+        self.canvas.bind_all('<KeyPress-Right>', self.turn_right)
+
+    def draw(self):
+        self.canvas.move(self.id, 0, self.y)
+        pos = self.canvas.coords(self.id)
+        if pos[1] <= 0:
+            self.y = 0
+        if pos[3] >= 400:
+            self.y = 0
+
+    def turn_left(self, evt):
+        self.y = 3
+
+    def  turn_right(self, evt):
+        self.y = -3
+        
 paddle = Paddle(canvas, 'blue')
-ball = Ball(canvas, "orange", paddle)
+paddle1 = Paddle1(canvas, 'red')
+ball = Ball(canvas, "orange", paddle, paddle1)
 
 while 1:
     ball.draw()
     paddle.draw()
+    paddle1.draw()
     tk.update_idletasks()
     tk.update()
     time.sleep(0.01)
