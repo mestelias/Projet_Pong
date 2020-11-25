@@ -3,7 +3,7 @@ from tkinter import messagebox
 import random
 import time
 
-def regles():
+def rules():
     window.withdraw()
 
     def backtomenu():
@@ -23,7 +23,6 @@ def regles():
     TextRules.pack()
     TextRules2 = Label(windowRules, fg = "red", text = "Bonne chance !", background = background_color, font = ("Helvetica", 16))
     TextRules2.pack()
-
 
     ButtonReturn = Button(windowRules, text = "Retour", command = backtomenu, width = 11, height = 1, bg = "orange", fg = "white", font = ("Impact", 12))
     ButtonReturn.place(x = 380, y = 450)
@@ -178,7 +177,7 @@ def play():
                 tk.withdraw()
                 window.update()
                 window.deiconify()
-            ButtonReturn = Button(tk, text="Retour", command=backtomenu, width=11, height=1, bg="orange", fg="white", font=("Impact", 12))
+            ButtonReturn = Button(tk, text = "Retour", command = backtomenu, width = 11, height = 1, bg = "orange", fg = "white", font = ("Impact", 12))
             ButtonReturn.pack()
         if counter1 == 10:
             ball.x = 0
@@ -191,7 +190,7 @@ def play():
                 tk.withdraw()
                 window.update()
                 window.deiconify()
-            ButtonReturn = Button(tk, text="Retour", command=backtomenu, width=11, height=1, bg="orange", fg="white", font=("Impact", 12))
+            ButtonReturn = Button(tk, text = "Retour", command = backtomenu, width = 11, height = 1, bg = "orange", fg = "white", font = ("Impact", 12))
             ButtonReturn.pack()
         tk.update_idletasks()
         tk.update()
@@ -206,6 +205,7 @@ title = "Pong" #Titre du jeu
 background_color = "#2a2a2a"
 green = "#016d2b"
 
+
 window = Tk()
 window.title(title)
 window.geometry("600x600")
@@ -214,13 +214,13 @@ filename = PhotoImage(file = "pop.png")
 bg_label = Label(window, image = filename)
 bg_label.place(x = 0, y = 0, relwidth = 1, relheight = 1)
 
-MonTextePlus = Label(window, text = "Pong", background = 'black', font =("Georgia", 26), fg = "white")
-MonTextePlus.pack()
+TextMore = Label(window, text = "Pong", background = 'black', font = ("Georgia", 26), fg = "white")
+TextMore.pack()
 
 ButtonPlay = Button(window, text = "Jouer", command = play, width = 28, height = 1, bg = "orange", fg = "white", font = ("Impact", 24))
 ButtonPlay.pack(pady = 110)
 
-ButtonRules = Button(window, text = "Règles", command = regles, width = 28, height = 1, bg = "orange", fg = "white", font = ("Impact", 24))
+ButtonRules = Button(window, text = "Règles", command = rules, width = 28, height = 1, bg = "orange", fg = "white", font = ("Impact", 24))
 ButtonRules.pack(pady = 10)
 
 ButtonQuit = Button(window, text = "Quitter", command = quit, width = 28, height = 1, bg = "orange", fg = "white", font = ("Impact", 24))
