@@ -37,8 +37,8 @@ def play():
     tk = Tk()
     tk.focus_force()
     tk.title('Pong')
-    tk.resizable(0, 0)
-    tk.wm_attributes('-topmost', 1)
+    tk.resizable(0, 0) 
+    tk.wm_attributes('-topmost', 1)  
     canvas = Canvas(tk, width = 500, height = 400, bd = 0, highlightthickness = 0)
     canvas.config(bg = "black")
     canvas.pack()
@@ -55,14 +55,14 @@ def play():
             self.id = canvas.create_oval(10, 10, 25, 25, fill = color)
             self.canvas.move(self.id, 235, 200)
             starts = [-3, 3]
-            random.shuffle(starts)
+            random.shuffle(starts) 
             self.x = starts[0]
             self.y = -3
-            self.canvas_height = self.canvas.winfo_height()
-            self.canvas_width = self.canvas.winfo_width()
+            self.canvas_height = self.canvas.winfo_height() 
+            self.canvas_width = self.canvas.winfo_width() 
 
         def draw(self):
-            self.canvas.move(self.id, self.x, self.y)
+            self.canvas.move(self.id, self.x, self.y) 
             pos = self.canvas.coords(self.id)
             if pos[1] <= 0:
                 self.y = 3
@@ -117,8 +117,8 @@ def play():
             self.y = 0
             self.canvas_height = self.canvas.winfo_height()
             self.canvas_width = self.canvas.winfo_width()
-            self.canvas.bind_all('z', self.turn_left)
-            self.canvas.bind_all('s', self.turn_right)
+            self.canvas.bind_all('z', self.up)
+            self.canvas.bind_all('s', self.down)
 
         def draw(self):
             self.canvas.move(self.id, 0, self.y)
@@ -128,10 +128,10 @@ def play():
             if pos[3] >= 400:
                 self.y = 0
 
-        def turn_left(self, evt):
+        def up(self, evt):
             self.y = -3
 
-        def  turn_right(self, evt):
+        def down(self, evt):
             self.y = 3
 
     class Paddle1:
@@ -141,8 +141,8 @@ def play():
             self.y = 0
             self.canvas_height = self.canvas.winfo_height()
             self.canvas_width = self.canvas.winfo_width()
-            self.canvas.bind_all('<KeyPress-Down>', self.turn_left)
-            self.canvas.bind_all('<KeyPress-Up>', self.turn_right)
+            self.canvas.bind_all('<KeyPress-Up>', self.up)
+            self.canvas.bind_all('<KeyPress-Down>', self.down)
 
         def draw(self):
             self.canvas.move(self.id, 0, self.y)
@@ -152,11 +152,12 @@ def play():
             if pos[3] >= 400:
                 self.y = 0
 
-        def turn_left(self, evt):
+        def up(self, evt):
+            self.y = -3
+
+        def down(self, evt):
             self.y = 3
 
-        def  turn_right(self, evt):
-            self.y = -3
 
     paddle = Paddle(canvas, 'blue')
     paddle1 = Paddle1(canvas, 'red')
@@ -197,7 +198,7 @@ def play():
         time.sleep(0.01)
 
         if counter == 10 or counter1 == 10:
-            time.sleep(2.5)
+            time.sleep(3.5)
     tk.mainloop()
 title = "Pong" #Titre du jeu
 
